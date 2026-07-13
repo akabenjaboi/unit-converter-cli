@@ -10,3 +10,6 @@ build/
 .env
 .vscode/
 .idea/
+
+# Claude Code — preferencias personales, no compartir
+.claude/settings.local.json
