@@ -1,0 +1,49 @@
+# Revisión automática de PRs por el agente `reviewer` del proyecto.
+# Se dispara solo (sin necesitar @claude) cuando se abre o actualiza un PR.
+# Publica un review real en GitHub (approve / request-changes) a modo de
+# recomendación. Es puramente informativo: NO se configura como required
+# status check ni bloquea el boton de merge — la decision final de mergear
+# o no es siempre de un humano.
+name: Claude Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  review:
+    # Evita que el bot revise sus propios PRs (los que crea @claude desde issues)
+    if: github.event.pull_request.user.login != 'claude[bot]' && github.event.pull_request.user.login != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4   # necesario para que use .claude/ y CLAUDE.md del repo
+        with:
+          fetch-depth: 0
+
+      - name: Review con el agente reviewer del proyecto
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Actua como el subagente `reviewer` definido en .claude/agents/reviewer.md
+            de este repo, siguiendo las reglas de CLAUDE.md. Revisa el diff completo
+            de este PR (usa `gh pr diff`) buscando bugs de correctness, tests
+            insuficientes o poco significativos, y violaciones de las reglas del
+            proyecto (nada de features no pedidas, nada de abstracciones prematuras).
+
+            No menciones "@claude" en ningun comentario que escribas (para no
+            volver a disparar este mismo flujo de automatizacion).
+
+            Al terminar, publica tu veredicto como un review real de GitHub:
+            - Si NO hay hallazgos bloqueantes: `gh pr review ${{ github.event.pull_request.number }} --approve -b "<resumen>"`
+            - Si SI hay hallazgos bloqueantes: `gh pr review ${{ github.event.pull_request.number }} --request-changes -b "<detalle especifico: archivo, linea, que corregir>"`
+
+          claude_args: |
+            --allowedTools "Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr review:*),Bash(gh pr comment:*)"
