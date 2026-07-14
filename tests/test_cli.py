@@ -175,3 +175,36 @@ def test_invalid_subcommand_exits_with_code_2():
     with pytest.raises(SystemExit) as exc_info:
         main(["km2millas", "10"])
     assert exc_info.value.code == 2
+
+
+# --- Litros / galones ---
+
+
+def test_l2gal(capsys):
+    code = main(["l2gal", "10"])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert captured.out == "10.00 litros = 2.64 galones\n"
+
+
+def test_gal2l(capsys):
+    code = main(["gal2l", "10"])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert captured.out == "10.00 galones = 37.85 litros\n"
+
+
+def test_l2gal_negative_value(capsys):
+    """Los litros negativos no tienen restricción física y deben funcionar."""
+    code = main(["l2gal", "-100"])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert captured.out == "-100.00 litros = -26.42 galones\n"
+
+
+def test_gal2l_negative_value(capsys):
+    """Los galones negativos no tienen restricción física y deben funcionar."""
+    code = main(["gal2l", "-100"])
+    captured = capsys.readouterr()
+    assert code == 0
+    assert captured.out == "-100.00 galones = -378.54 litros\n"

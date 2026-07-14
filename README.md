@@ -1,8 +1,8 @@
 # unit-converter-cli
 
-CLI simple para convertir unidades de distancia (kilómetros / millas) y
-temperatura (Celsius / Fahrenheit). Escrito en Python puro, sin dependencias
-en tiempo de ejecución.
+CLI simple para convertir unidades de distancia (kilómetros / millas),
+temperatura (Celsius / Fahrenheit) y volumen (litros / galones). Escrito en
+Python puro, sin dependencias en tiempo de ejecución.
 
 ## Requisitos
 
@@ -31,8 +31,8 @@ pip install -e ".[dev]"
 
 ## Uso
 
-El comando instalado es `unit-convert`, con 4 subcomandos: `km2mi`, `mi2km`,
-`c2f` y `f2c`.
+El comando instalado es `unit-convert`, con 6 subcomandos: `km2mi`, `mi2km`,
+`c2f`, `f2c`, `l2gal` y `gal2l`.
 
 ```console
 $ unit-convert km2mi 10
@@ -46,6 +46,12 @@ $ unit-convert c2f 100
 
 $ unit-convert f2c 212
 212.00°F = 100.00°C
+
+$ unit-convert l2gal 10
+10.00 litros = 2.64 galones
+
+$ unit-convert gal2l 10
+10.00 galones = 37.85 litros
 ```
 
 Si el valor de temperatura ingresado (o el resultado) está por debajo del

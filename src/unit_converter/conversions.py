@@ -1,6 +1,7 @@
 """Funciones puras de conversión de unidades."""
 
 KM_PER_MILE = 1.609344
+LITERS_PER_GALLON = 3.785411784
 
 
 def km_to_miles(km: float) -> float:
@@ -21,3 +22,13 @@ def celsius_to_fahrenheit(celsius: float) -> float:
 def fahrenheit_to_celsius(fahrenheit: float) -> float:
     """Convierte grados Fahrenheit a grados Celsius."""
     return (fahrenheit - 32) * 5 / 9
+
+
+def liters_to_gallons(liters: float) -> float:
+    """Convierte litros a galones."""
+    return liters / LITERS_PER_GALLON
+
+
+def gallons_to_liters(gallons: float) -> float:
+    """Convierte galones a litros."""
+    return gallons * LITERS_PER_GALLON

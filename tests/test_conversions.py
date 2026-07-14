@@ -3,7 +3,9 @@ import pytest
 from unit_converter.conversions import (
     celsius_to_fahrenheit,
     fahrenheit_to_celsius,
+    gallons_to_liters,
     km_to_miles,
+    liters_to_gallons,
     miles_to_km,
 )
 
@@ -97,3 +99,35 @@ def test_celsius_to_fahrenheit_absolute_zero_has_float_rounding_error():
 def test_km_to_miles_large_value_precision():
     original = 1_000_000.0
     assert km_to_miles(original) == pytest.approx(621371.1922373339)
+
+
+# --- Litros / galones ---
+
+
+def test_liters_to_gallons_zero():
+    assert liters_to_gallons(0) == 0
+
+
+def test_gallons_to_liters_zero():
+    assert gallons_to_liters(0) == 0
+
+
+def test_liters_gallons_roundtrip():
+    original = 42.0
+    assert gallons_to_liters(liters_to_gallons(original)) == pytest.approx(original)
+
+
+def test_liters_to_gallons_negative_value():
+    """Los litros negativos no tienen restricción física: deben convertirse igual."""
+    assert liters_to_gallons(-100) == pytest.approx(-26.417205235814841)
+
+
+def test_gallons_to_liters_negative_value():
+    """Los galones negativos no tienen restricción física: deben convertirse igual."""
+    assert gallons_to_liters(-100) == pytest.approx(-378.5411784)
+
+
+@pytest.mark.parametrize("original", [-100.0, -0.001, 0.0, 0.001, 42.0, 123456.789])
+def test_liters_gallons_roundtrip_parametrized(original):
+    assert gallons_to_liters(liters_to_gallons(original)) == pytest.approx(original)
+    assert liters_to_gallons(gallons_to_liters(original)) == pytest.approx(original)

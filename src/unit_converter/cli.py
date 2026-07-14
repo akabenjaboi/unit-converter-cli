@@ -6,7 +6,9 @@ import sys
 from unit_converter.conversions import (
     celsius_to_fahrenheit,
     fahrenheit_to_celsius,
+    gallons_to_liters,
     km_to_miles,
+    liters_to_gallons,
     miles_to_km,
 )
 
@@ -21,10 +23,10 @@ def _below_absolute_zero(celsius: float, fahrenheit: float) -> bool:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Construye el parser de argumentos con sus 4 subcomandos."""
+    """Construye el parser de argumentos con sus 6 subcomandos."""
     parser = argparse.ArgumentParser(
         prog="unit-convert",
-        description="Convierte unidades de distancia y temperatura.",
+        description="Convierte unidades de distancia, temperatura y volumen.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -39,6 +41,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     f2c = subparsers.add_parser("f2c", help="Fahrenheit a Celsius")
     f2c.add_argument("valor", type=float)
+
+    l2gal = subparsers.add_parser("l2gal", help="Litros a galones")
+    l2gal.add_argument("valor", type=float)
+
+    gal2l = subparsers.add_parser("gal2l", help="Galones a litros")
+    gal2l.add_argument("valor", type=float)
 
     return parser
 
@@ -73,6 +81,16 @@ def main(argv: list[str] | None = None) -> int:
             print(ERROR_ABSOLUTE_ZERO, file=sys.stderr)
             return 1
         print(f"{valor:.2f}°F = {resultado:.2f}°C")
+        return 0
+
+    if args.command == "l2gal":
+        resultado = liters_to_gallons(valor)
+        print(f"{valor:.2f} litros = {resultado:.2f} galones")
+        return 0
+
+    if args.command == "gal2l":
+        resultado = gallons_to_liters(valor)
+        print(f"{valor:.2f} galones = {resultado:.2f} litros")
         return 0
 
     return 1
