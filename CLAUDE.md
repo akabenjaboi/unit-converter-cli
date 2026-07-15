@@ -12,6 +12,7 @@ Instrucciones compartidas por todos los agentes y todo el equipo. Mantener este 
 
 - Este proyecto usa **Superpowers** como metodología de desarrollo (brainstorm → diseño aprobado → plan → TDD → review). Instálalo con `/plugin install superpowers@claude-plugins-official` (ver README).
 - Sigue los flujos de Superpowers cuando estén disponibles; estas reglas de proyecto los complementan, no los reemplazan.
+- En CI (ejecuciones remotas vía `@claude`) Superpowers NO está instalado — decisión deliberada por seguridad de cadena de suministro. Ahí rigen únicamente estas reglas base: para tareas delegadas por issue basta con plan claro, implementación acotada y tests en verde.
 
 ## Git y GitHub
 
