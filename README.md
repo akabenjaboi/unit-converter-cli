@@ -77,6 +77,6 @@ pytest -q
 Este repo se desarrolla con Claude Code + la metodología [Superpowers](https://github.com/obra/superpowers):
 
 - **Setup (una vez)**: en Claude Code corre `/plugin install superpowers@claude-plugins-official`, luego abre `claude` en la raíz del repo.
-- **Remoto**: menciona `@claude <tarea>` en cualquier issue o PR (requiere permiso de escritura). El CI usa la misma metodología automáticamente.
+- **Remoto**: menciona `@claude <tarea>` en cualquier issue o PR (requiere permiso de escritura). El CI sigue las reglas de CLAUDE.md (Superpowers es solo local).
 - **Reviews**: cada PR recibe un review automático según los criterios de `.claude/agents/reviewer.md`. El merge siempre lo decide un humano.
 - Las reglas del proyecto están en `CLAUDE.md`.

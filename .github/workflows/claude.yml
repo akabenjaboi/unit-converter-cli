@@ -25,8 +25,7 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          # Superpowers: misma metodología que usamos localmente
-          plugin_marketplaces: "https://github.com/obra/superpowers-marketplace.git"
-          plugins: "superpowers@superpowers-marketplace"
+          # Superpowers se usa solo localmente (ver README). No se instala en CI
+          # para evitar riesgo de cadena de suministro (review PR #4).
           # La metodología multiagente consume muchos turnos
           claude_args: "--max-turns 60"
