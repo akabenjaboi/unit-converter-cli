@@ -25,5 +25,8 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          # El flujo planner->builder->tester->reviewer consume muchos turnos
+          # Superpowers: misma metodología que usamos localmente
+          plugin_marketplaces: "https://github.com/obra/superpowers-marketplace.git"
+          plugins: "superpowers@superpowers-marketplace"
+          # La metodología multiagente consume muchos turnos
           claude_args: "--max-turns 60"
