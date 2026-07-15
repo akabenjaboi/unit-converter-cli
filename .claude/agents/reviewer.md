@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Revisa diffs antes de commit o PR. Úsalo PROACTIVAMENTE como última fase del ciclo, cuando builder y tester ya terminaron.
+description: Revisa diffs antes de commit o PR. Úsalo PROACTIVAMENTE como última fase, cuando la implementación y los tests ya están listos.
 tools: Read, Glob, Grep, Bash
 ---
 
@@ -21,4 +21,4 @@ Devuelve:
 - Hallazgos menores:
 - Sugerencia de mensaje de commit:
 
-Si hay hallazgos bloqueantes, el orquestador debe devolver el trabajo al builder.
+Si hay hallazgos bloqueantes, deben corregirse y volver a revisarse antes del merge.
